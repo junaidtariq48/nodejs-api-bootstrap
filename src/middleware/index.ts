@@ -8,7 +8,6 @@ import { Role, getUserBySessionToken } from "../db/users";
  * @param {express.Request} req - The request object.
  * @param {express.Response} res - The response object.
  * @param {express.NextFunction} next - The next function to call.
- * @returns None
  */
 export const isAdmin = async (
   req: express.Request,
@@ -38,7 +37,6 @@ export const isAdmin = async (
  * @param {express.Request} req - The Express request object.
  * @param {express.Response} res - The Express response object.
  * @param {express.NextFunction} next - The next middleware function.
- * @returns None
  * @throws {Error} If there is an error while checking ownership.
  */
 export const isOwner = async (
@@ -69,7 +67,6 @@ export const isOwner = async (
  * @param {express.Request} req - The request object.
  * @param {express.Response} res - The response object.
  * @param {express.NextFunction} next - The next function to call.
- * @returns None
  * @throws {Error} If there is an error while checking authentication.
  */
 export const isAuthenticated = async (
