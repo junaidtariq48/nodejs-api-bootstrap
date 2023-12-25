@@ -84,11 +84,25 @@ export const isAuthenticated = async (
       return res.sendStatus(403);
     }
 
-    const existingUser = await getUserBySessionToken(sessionToken);
+    const existingUser = await getUserBySessionToken(sessionToken).select(
+      "+authentication.sessionExpiry"
+    );
 
     if (!existingUser) {
       return res.sendStatus(403);
     }
+
+    if (!existingUser.authentication.sessionExpiry) {
+      return res.sendStatus(403);
+    }
+
+    const date = new Date();
+    const expiryDate = existingUser.authentication.sessionExpiry;
+
+    if (date > expiryDate) {
+      return res.sendStatus(403);
+    }
+
     merge(req, { identity: existingUser });
 
     return next();

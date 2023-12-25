@@ -31,7 +31,10 @@ export const login = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(403);
     }
 
-    //set expiry time
+    /**
+     * Sets the session expiry date for the user's authentication.
+     * @param {number} days - The number of days to add to the current date.
+     */
     user.authentication.sessionExpiry = addDays(2);
 
     const salt = random();
