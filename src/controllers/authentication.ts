@@ -2,6 +2,13 @@ import { createUser, getUserByEmail } from "../db/users";
 import express from "express";
 import { authentication, random } from "../helpers";
 
+/**
+ * Handles the login functionality by validating the user's email and password,
+ * generating a session token, and setting a cookie with the session token.
+ * @param {express.Request} req - The request object containing the user's email and password.
+ * @param {express.Response} res - The response object to send the result of the login process.
+ * @returns response
+ */
 export const login = async (req: express.Request, res: express.Response) => {
   try {
     const { email, password } = req.body;
@@ -42,6 +49,13 @@ export const login = async (req: express.Request, res: express.Response) => {
   }
 };
 
+/**
+ * Registers a new user with the provided email, password, and username.
+ * @param {express.Request} req - The request object containing the user's information.
+ * @param {express.Response} res - The response object to send back to the client.
+ * @returns response
+ * @throws {Error} If there is an error during the registration process.
+ */
 export const register = async (req: express.Request, res: express.Response) => {
   try {
     const { email, password, username } = req.body;

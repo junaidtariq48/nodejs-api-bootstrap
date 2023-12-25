@@ -2,6 +2,12 @@ import express from "express";
 
 import { deleteUserById, getUserById, getUsers } from "../db/users";
 
+/**
+ * Retrieves all users from the database and returns them as a JSON response.
+ * @param {express.Request} req - The request object.
+ * @param {express.Response} res - The response object.
+ * @returns A JSON response containing all users.
+ */
 export const getAllUsers = async (
   req: express.Request,
   res: express.Response
@@ -16,6 +22,13 @@ export const getAllUsers = async (
   }
 };
 
+/**
+ * Deletes a user with the specified ID.
+ * @param {express.Request} req - The request object.
+ * @param {express.Response} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the user is deleted.
+ * @throws {Error} - If there is an error deleting the user.
+ */
 export const deleteUser = async (
   req: express.Request,
   res: express.Response
@@ -32,6 +45,13 @@ export const deleteUser = async (
   }
 };
 
+/**
+ * Updates a user's username based on the provided request parameters and body.
+ * @param {express.Request} req - The request object containing the user's ID and new username.
+ * @param {express.Response} res - The response object to send the updated user data.
+ * @returns None
+ * @throws {Error} If there is an error updating the user's username.
+ */
 export const updateUser = async (
   req: express.Request,
   res: express.Response
