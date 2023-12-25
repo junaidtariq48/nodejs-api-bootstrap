@@ -1,4 +1,4 @@
-import { isAuthenticated, isOwner } from "../middleware";
+import { isAdmin, isAuthenticated, isOwner } from "../middleware";
 import { deleteUser, getAllUsers, updateUser } from "../controllers/users";
 import express from "express";
 
@@ -15,7 +15,7 @@ export default (router: express.Router) => {
    * @middleware isAuthenticated - Middleware function to check if user is authenticated.
    * @handler getAllUsers - Handler function to retrieve all users.
    */
-  router.get("/users", isAuthenticated, getAllUsers);
+  router.get("/users", isAuthenticated, isAdmin, getAllUsers);
 
   /**
    * Deletes a user with the specified ID.

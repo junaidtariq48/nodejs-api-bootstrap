@@ -1,7 +1,37 @@
 import express from "express";
 import { get, merge } from "lodash";
 
-import { getUserBySessionToken } from "../db/users";
+import { Role, getUserBySessionToken } from "../db/users";
+
+/**
+ * Checks if the current user is an admin.
+ * @param {express.Request} req - The request object.
+ * @param {express.Response} res - The response object.
+ * @param {express.NextFunction} next - The next function to call.
+ * @returns None
+ */
+export const isAdmin = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const currentUserRole = get(req, "identity.role") as string;
+
+    if (!currentUserRole) {
+      return res.sendStatus(403);
+    }
+
+    if (currentUserRole !== Role.ADMIN) {
+      return res.sendStatus(403);
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
 
 /**
  * Middleware function to check if the current user is the owner of a resource.
