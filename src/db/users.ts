@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 
+export enum Role {
+  ADMIN = "ADMIN",
+  USER = "USER",
+}
 /**
  * Defines the schema for the User collection in the MongoDB database.
  * @param {Object} UserSchema - The schema definition for the User collection.
@@ -10,15 +14,29 @@ import mongoose from "mongoose";
  * @property {string} authentication.salt - The salt used for password hashing. Not selected by default.
  * @property {string} authentication.sessionToken - The session token of the user. Not selected by default.
  */
-const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  authentication: {
-    password: { type: String, required: true, select: false },
-    salt: { type: String, select: false },
-    sessionToken: { type: String, select: false },
+const UserSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true },
+    email: { type: String, required: true },
+    authentication: {
+      password: { type: String, required: true, select: false },
+      salt: { type: String, select: false },
+      sessionToken: { type: String, select: false },
+    },
+    meta: {
+      ip: { type: String, select: false },
+      geo: { type: String, select: false },
+      browser: { type: String, select: false },
+      language: { type: String, select: false },
+    },
+    role: {
+      type: String,
+      enum: Role,
+      default: Role.USER,
+    },
   },
-});
+  { timestamps: true }
+);
 
 /**
  * Represents a user model in the MongoDB database.

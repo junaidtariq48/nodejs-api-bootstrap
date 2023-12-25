@@ -1,6 +1,7 @@
 import { createUser, getUserByEmail } from "../db/users";
 import express from "express";
 import { authentication, random } from "../helpers";
+var geoip = require("geoip-lite");
 
 /**
  * Handles the login functionality by validating the user's email and password,
@@ -46,6 +47,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     return res.status(200).json(user).end();
   } catch (error) {
     console.log(error);
+    return res.sendStatus(400);
   }
 };
 
@@ -69,10 +71,21 @@ export const register = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(400);
     }
 
+    var geo = geoip.lookup(req.ip);
+    var ip = req.ip;
+    var browser = req.headers["user-agent"];
+    var language = req.headers["accept-language"];
+
     const salt = random();
     const user = await createUser({
       email,
       username,
+      meta: {
+        ip,
+        geo,
+        browser,
+        language,
+      },
       authentication: {
         salt,
         password: authentication(salt, password),
