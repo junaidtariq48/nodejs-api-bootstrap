@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
       password: { type: String, required: true, select: false },
       salt: { type: String, select: false },
       sessionToken: { type: String, select: false },
+      sessionExpiry: { type: Date, select: false },
     },
     meta: {
       ip: { type: String, select: false },

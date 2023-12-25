@@ -24,3 +24,15 @@ export const authentication = (salt: string, password: string) => {
     .update(SECRET)
     .digest("hex");
 };
+
+/**
+ * Adds the specified number of days to a given date.
+ * @param {number} days - The number of days to add.
+ * @param {Date} [date=new Date()] - The date to which the days should be added. If not provided, the current date is used.
+ * @returns {Date} - The new date after adding the specified number of days.
+ */
+export const addDays = (days: number, date = new Date()) => {
+  date.setDate(date.getDate() + days);
+
+  return date;
+};

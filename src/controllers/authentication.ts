@@ -1,6 +1,6 @@
 import { createUser, getUserByEmail } from "../db/users";
 import express from "express";
-import { authentication, random } from "../helpers";
+import { addDays, authentication, random } from "../helpers";
 var geoip = require("geoip-lite");
 
 /**
@@ -30,6 +30,9 @@ export const login = async (req: express.Request, res: express.Response) => {
     if (user.authentication.password != expectedHash) {
       return res.sendStatus(403);
     }
+
+    //set expiry time
+    user.authentication.sessionExpiry = addDays(2);
 
     const salt = random();
     user.authentication.sessionToken = authentication(
